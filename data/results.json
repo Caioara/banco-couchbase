@@ -1,0 +1,317 @@
+{
+  "timestamp": "2026-09-07T20:09:47.862Z",
+  "config": {
+    "inserts": 1000,
+    "reads": 1000,
+    "readsPaginated": 200,
+    "pageSize": 20,
+    "updates": 500,
+    "aggregates": 200,
+    "deletes": 500,
+    "concurrency": 50,
+    "sampleIntervalMs": 200
+  },
+  "storage": {
+    "averageDocumentBytes": 338,
+    "totalInsertedBytes": 338000
+  },
+  "performance": {
+    "insert": {
+      "count": 1000,
+      "attempts": 1000,
+      "errors": 0,
+      "errorRatePercent": 0,
+      "totalMs": 303.5279002189636,
+      "throughputOps": 3294.5900501357687,
+      "avgMs": 13.704678399562836,
+      "p50Ms": 13.465199947357178,
+      "p75Ms": 15.380499839782715,
+      "p90Ms": 16.940900325775146,
+      "p95Ms": 17.73509979248047,
+      "p99Ms": 19.6149001121521
+    },
+    "readByCode": {
+      "count": 1000,
+      "attempts": 1000,
+      "errors": 0,
+      "errorRatePercent": 0,
+      "totalMs": 155.1813998222351,
+      "throughputOps": 6444.071268499509,
+      "avgMs": 7.568234992980957,
+      "p50Ms": 7.181400299072266,
+      "p75Ms": 8.71939992904663,
+      "p90Ms": 9.886499881744385,
+      "p95Ms": 11.198599815368652,
+      "p99Ms": 13.498899936676025
+    },
+    "readPaginated": {
+      "count": 200,
+      "attempts": 200,
+      "errors": 0,
+      "errorRatePercent": 0,
+      "totalMs": 3055.9563999176025,
+      "throughputOps": 65.44595989831288,
+      "avgMs": 716.2689914941787,
+      "p50Ms": 729.2800998687744,
+      "p75Ms": 834.5127997398376,
+      "p90Ms": 879.7469997406006,
+      "p95Ms": 926.5774002075195,
+      "p99Ms": 969.7617001533508
+    },
+    "update": {
+      "count": 500,
+      "attempts": 500,
+      "errors": 0,
+      "errorRatePercent": 0,
+      "totalMs": 250.55940008163452,
+      "throughputOps": 1995.53479070071,
+      "avgMs": 24.746162599563597,
+      "p50Ms": 25.261399745941162,
+      "p75Ms": 26.31190013885498,
+      "p90Ms": 27.672800064086914,
+      "p95Ms": 27.951600074768066,
+      "p99Ms": 28.592400074005127
+    },
+    "aggregate": {
+      "count": 200,
+      "attempts": 200,
+      "errors": 0,
+      "errorRatePercent": 0,
+      "totalMs": 2593.2631998062134,
+      "throughputOps": 77.12290831680541,
+      "avgMs": 600.0841884851455,
+      "p50Ms": 595.1697998046875,
+      "p75Ms": 670.6124000549316,
+      "p90Ms": 789.2934999465942,
+      "p95Ms": 831.349100112915,
+      "p99Ms": 978.3145999908447
+    },
+    "delete": {
+      "count": 500,
+      "attempts": 500,
+      "errors": 0,
+      "errorRatePercent": 0,
+      "totalMs": 99.84569978713989,
+      "throughputOps": 5007.726933317562,
+      "avgMs": 9.645450604438782,
+      "p50Ms": 9.601099967956543,
+      "p75Ms": 10.458399772644043,
+      "p90Ms": 12.68090009689331,
+      "p95Ms": 12.95550012588501,
+      "p99Ms": 13.289499759674072
+    }
+  },
+  "efficiency": {
+    "bytesPerOperation": 99.41176470588235,
+    "opsPerMBInserted": 10059.171597633136,
+    "weightedLatencyMs": 88.74686940894408,
+    "throughputGeralOpsPerSec": 526.4133389308947
+  },
+  "cost": {
+    "computeUsd": 0.000012955177975683718,
+    "operationsUsd": 0.00068,
+    "storageMonthlyUsd": 0.000007773999999999999,
+    "pricing": {
+      "vCpuHourUsd": 0.034,
+      "perMillionOpsUsd": 0.2,
+      "gbMonthUsd": 0.023
+    }
+  },
+  "resourceTimeline": [
+    {
+      "tSec": 0.2,
+      "cpuPercent": 115.59,
+      "rssMB": 67.73,
+      "heapUsedMB": 9.93
+    },
+    {
+      "tSec": 0.41,
+      "cpuPercent": 147.09,
+      "rssMB": 68.61,
+      "heapUsedMB": 13.01
+    },
+    {
+      "tSec": 0.61,
+      "cpuPercent": 91.2,
+      "rssMB": 70.55,
+      "heapUsedMB": 12.84
+    },
+    {
+      "tSec": 0.82,
+      "cpuPercent": 0,
+      "rssMB": 70.59,
+      "heapUsedMB": 13.05
+    },
+    {
+      "tSec": 1.03,
+      "cpuPercent": 7.29,
+      "rssMB": 70.67,
+      "heapUsedMB": 13.32
+    },
+    {
+      "tSec": 1.23,
+      "cpuPercent": 7.38,
+      "rssMB": 71.34,
+      "heapUsedMB": 13.71
+    },
+    {
+      "tSec": 1.44,
+      "cpuPercent": 7.52,
+      "rssMB": 71.74,
+      "heapUsedMB": 14.18
+    },
+    {
+      "tSec": 1.65,
+      "cpuPercent": 0,
+      "rssMB": 71.91,
+      "heapUsedMB": 14.32
+    },
+    {
+      "tSec": 1.85,
+      "cpuPercent": 15.33,
+      "rssMB": 72.22,
+      "heapUsedMB": 14.65
+    },
+    {
+      "tSec": 2.05,
+      "cpuPercent": 15.96,
+      "rssMB": 72.7,
+      "heapUsedMB": 15.08
+    },
+    {
+      "tSec": 2.26,
+      "cpuPercent": 0,
+      "rssMB": 73.01,
+      "heapUsedMB": 15.43
+    },
+    {
+      "tSec": 2.46,
+      "cpuPercent": 0,
+      "rssMB": 73.54,
+      "heapUsedMB": 15.8
+    },
+    {
+      "tSec": 2.66,
+      "cpuPercent": 7.5,
+      "rssMB": 73.57,
+      "heapUsedMB": 10.29
+    },
+    {
+      "tSec": 2.87,
+      "cpuPercent": 0,
+      "rssMB": 73.84,
+      "heapUsedMB": 10.69
+    },
+    {
+      "tSec": 3.08,
+      "cpuPercent": 7.67,
+      "rssMB": 73.84,
+      "heapUsedMB": 10.97
+    },
+    {
+      "tSec": 3.28,
+      "cpuPercent": 0,
+      "rssMB": 73.84,
+      "heapUsedMB": 11.2
+    },
+    {
+      "tSec": 3.48,
+      "cpuPercent": 0,
+      "rssMB": 73.84,
+      "heapUsedMB": 11.43
+    },
+    {
+      "tSec": 3.68,
+      "cpuPercent": 99.99,
+      "rssMB": 77.91,
+      "heapUsedMB": 15.78
+    },
+    {
+      "tSec": 3.89,
+      "cpuPercent": 44.89,
+      "rssMB": 77.89,
+      "heapUsedMB": 15.03
+    },
+    {
+      "tSec": 4.1,
+      "cpuPercent": 0,
+      "rssMB": 77.93,
+      "heapUsedMB": 15.15
+    },
+    {
+      "tSec": 4.31,
+      "cpuPercent": 7.91,
+      "rssMB": 77.93,
+      "heapUsedMB": 15.42
+    },
+    {
+      "tSec": 4.51,
+      "cpuPercent": 7.47,
+      "rssMB": 77.93,
+      "heapUsedMB": 15.64
+    },
+    {
+      "tSec": 4.72,
+      "cpuPercent": 21.66,
+      "rssMB": 77.93,
+      "heapUsedMB": 15.98
+    },
+    {
+      "tSec": 4.93,
+      "cpuPercent": 0,
+      "rssMB": 77.44,
+      "heapUsedMB": 10.26
+    },
+    {
+      "tSec": 5.14,
+      "cpuPercent": 21.99,
+      "rssMB": 77.63,
+      "heapUsedMB": 10.7
+    },
+    {
+      "tSec": 5.34,
+      "cpuPercent": 15.99,
+      "rssMB": 77.63,
+      "heapUsedMB": 10.94
+    },
+    {
+      "tSec": 5.54,
+      "cpuPercent": 0,
+      "rssMB": 77.63,
+      "heapUsedMB": 11.29
+    },
+    {
+      "tSec": 5.74,
+      "cpuPercent": 7.93,
+      "rssMB": 77.63,
+      "heapUsedMB": 11.67
+    },
+    {
+      "tSec": 5.94,
+      "cpuPercent": 8.02,
+      "rssMB": 77.63,
+      "heapUsedMB": 11.94
+    },
+    {
+      "tSec": 6.14,
+      "cpuPercent": 0,
+      "rssMB": 77.63,
+      "heapUsedMB": 12.18
+    },
+    {
+      "tSec": 6.34,
+      "cpuPercent": 0,
+      "rssMB": 77.63,
+      "heapUsedMB": 12.38
+    }
+  ],
+  "resources": {
+    "eventLoopP95Ms": 20.103167,
+    "heapPeakMB": 15.98,
+    "heapAvgMB": 13.040645161290325,
+    "rssPeakMB": 77.93,
+    "rssAvgMB": 74.57774193548391,
+    "cpuPeakPercent": 147.09,
+    "cpuAvgPercent": 21.23806451612903
+  }
+}

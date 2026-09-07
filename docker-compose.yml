@@ -1,0 +1,56 @@
+services:
+  api:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      COUCHBASE_URL: couchbase://couchbase
+      COUCHBASE_USERNAME: Administrator
+      COUCHBASE_PASSWORD: troque-esta-senha
+      COUCHBASE_BUCKET: agendamentos
+      COUCHBASE_SCOPE: _default
+      COUCHBASE_COLLECTION_USERS: users
+      COUCHBASE_COLLECTION_EVENTS: events
+      COUCHBASE_COLLECTION_ENROLLMENTS: enrollments
+      COUCHBASE_COLLECTION_SESSIONS: sessions
+      SESSION_SECRET: troque-esta-chave
+    depends_on:
+      couchbase:
+        condition: service_started
+      couchbase-init:
+        condition: service_completed_successfully
+  couchbase:
+    image: couchbase/server:7.2.4
+    restart: unless-stopped
+    ports:
+      - "8091:8091"
+      - "8092:8092"
+      - "8093:8093"
+      - "8094:8094"
+      - "8095:8095"
+      - "8096:8096"
+      - "11210:11210"
+    volumes:
+      - couchbase_data:/opt/couchbase/var
+  couchbase-init:
+    image: curlimages/curl:8.7.1
+    depends_on:
+      couchbase:
+        condition: service_started
+    environment:
+      COUCHBASE_URL: http://couchbase:8091
+      COUCHBASE_USERNAME: Administrator
+      COUCHBASE_PASSWORD: troque-esta-senha
+      COUCHBASE_BUCKET: agendamentos
+      COUCHBASE_SCOPE: _default
+      COUCHBASE_COLLECTION_USERS: users
+      COUCHBASE_COLLECTION_EVENTS: events
+      COUCHBASE_COLLECTION_ENROLLMENTS: enrollments
+      COUCHBASE_COLLECTION_SESSIONS: sessions
+    volumes:
+      - ./scripts:/scripts:ro
+    entrypoint: ["/bin/sh", "/scripts/couchbase-init.sh"]
+
+volumes:
+  couchbase_data:

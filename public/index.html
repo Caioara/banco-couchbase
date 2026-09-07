@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agenda Flow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orbit"></div>
+    <div class="bg-grid"></div>
+
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">AF</span>
+        <div>
+          <p class="brand-title">Agenda Flow</p>
+          <p class="brand-subtitle">Agendamento inteligente com Couchbase</p>
+        </div>
+      </div>
+      <div class="user-area" id="user-area">
+        <span class="pill" id="user-pill">Visitante</span>
+        <button class="ghost" id="logout-btn" hidden>Sair</button>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <h1>Sistema de agendamentos com eventos e inscricoes.</h1>
+          <p>
+            Organize eventos, controle vagas e permita que clientes se inscrevam com
+            lembretes automaticos e visao centralizada.
+          </p>
+          <div class="hero-actions">
+            <button class="primary" id="scroll-events">Ver eventos</button>
+            <button class="ghost" id="scroll-auth">Entrar / Cadastrar</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>Status do sistema</h3>
+          <ul>
+            <li>Eventos publicos com busca rapida</li>
+            <li>Inscricoes com controle de vagas</li>
+            <li>Painel para criadores de eventos</li>
+            <li>Lembretes de agenda</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="auth-section">
+        <div class="section-header">
+          <h2>Acesso</h2>
+          <p>Entre para gerenciar seus eventos ou se inscrever.</p>
+        </div>
+        <div class="grid-2">
+          <form class="card" id="login-form">
+            <h3>Login</h3>
+            <label>
+              Email
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Senha
+              <input type="password" name="password" required />
+            </label>
+            <button class="primary" type="submit">Entrar</button>
+            <p class="message" id="login-message"></p>
+          </form>
+
+          <form class="card" id="register-form">
+            <h3>Cadastro</h3>
+            <label>
+              Nome
+              <input type="text" name="name" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" required />
+            </label>
+            <label>
+              Senha
+              <input type="password" name="password" minlength="6" required />
+            </label>
+            <label>
+              Perfil
+              <select name="role">
+                <option value="client">Cliente</option>
+                <option value="professional">Profissional</option>
+                <option value="admin">Admin</option>
+              </select>
+            </label>
+            <button class="primary" type="submit">Criar conta</button>
+            <p class="message" id="register-message"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" id="events-section">
+        <div class="section-header">
+          <h2>Eventos disponiveis</h2>
+          <p>Busque por data, palavra-chave ou local.</p>
+        </div>
+        <div class="filters">
+          <input type="text" id="search-input" placeholder="Buscar evento" />
+          <input type="date" id="from-date" />
+          <input type="date" id="to-date" />
+          <button class="primary" id="search-btn">Buscar</button>
+        </div>
+        <div class="list" id="events-list"></div>
+        <div class="pagination" id="events-pagination" hidden>
+          <button class="ghost" id="events-prev" type="button" disabled>Anterior</button>
+          <span class="pagination-info" id="events-pagination-info"></span>
+          <button class="ghost" id="events-next" type="button" disabled>Seguinte</button>
+        </div>
+      </section>
+
+      <section class="section" id="dashboard" hidden>
+        <div class="section-header">
+          <h2>Painel</h2>
+          <p>Gerencie eventos, inscricoes e lembretes.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card" id="create-event-card" hidden>
+            <h3>Criar evento</h3>
+            <form id="event-form">
+              <label>
+                Titulo
+                <input type="text" name="title" required />
+              </label>
+              <label>
+                Descricao
+                <textarea name="description" rows="3"></textarea>
+              </label>
+              <label>
+                Local
+                <input type="text" name="location" />
+              </label>
+              <label>
+                Data e hora
+                <input type="datetime-local" name="startAt" required />
+              </label>
+              <div class="inline-fields">
+                <label>
+                  Duracao (min)
+                  <input type="number" name="durationMinutes" min="15" value="60" />
+                </label>
+                <label>
+                  Vagas
+                  <input type="number" name="capacity" min="1" value="10" />
+                </label>
+              </div>
+              <button class="primary" type="submit">Salvar evento</button>
+              <p class="message" id="event-message"></p>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Lembretes proximos</h3>
+            <div class="list" id="reminders-list"></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card" id="my-events-card" hidden>
+            <h3>Meus eventos</h3>
+            <div class="list" id="my-events-list"></div>
+          </div>
+
+          <div class="card">
+            <h3>Minhas inscricoes</h3>
+            <div class="list" id="my-enrollments-list"></div>
+          </div>
+        </div>
+
+        <div class="card" id="all-enrollments-card" hidden>
+          <div class="table-header">
+            <div>
+              <h3>Todas as inscricoes</h3>
+              <p class="muted">Visao geral para admins e profissionais.</p>
+            </div>
+          </div>
+          <div class="table" id="all-enrollments-list"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Agenda Flow - Projeto Couchbase</p>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

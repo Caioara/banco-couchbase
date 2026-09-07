@@ -1,0 +1,22 @@
+{
+  "name": "agendamento-couchbase",
+  "version": "1.0.0",
+  "description": "Sistema de agendamento com Couchbase",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "bench": "node scripts/benchmark.js",
+    "cleanup:bench": "node scripts/cleanup-bench.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "couchbase": "^4.4.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
