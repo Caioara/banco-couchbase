@@ -2,6 +2,13 @@ import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+try:
+    import os
+    import base64
+    import urllib.request
+    import urllib.error
+except ImportError:
+    pass
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 DATA_FILE = BASE_DIR / "data" / "results.json"
@@ -30,6 +37,40 @@ def save_fig(fig, name):
     fig.savefig(REPORTS_DIR / f"{name}.png", dpi=160)
     fig.savefig(REPORTS_DIR / f"{name}.svg")
     plt.close(fig)
+
+
+def fetch_couchbase_storage_metrics():
+    """Busca no Couchbase as metricas reais de storage do bucket:
+    Collection (dataUsed), Storage (diskUsed) e Indices (diskUsed - dataUsed).
+
+        Se a API nao responder, retorna None e o grafico usa fallback dos dados do results.json.
+    """
+    try:
+        url = os.environ.get("COUCHBASE_URL", "couchbase://localhost")
+        host = url.replace("couchbase://", "").replace("couchbase+ssl://", "").rstrip("/")
+        username = os.environ.get("COUCHBASE_USERNAME", "Administrator")
+        password = os.environ.get("COUCHBASE_PASSWORD", "") or "troque-esta-senha"
+        bucket = os.environ.get("COUCHBASE_BUCKET", "agendamentos")
+
+        api_url = f"http://{host}:8091/pools/default/buckets/{bucket}"
+        req = urllib.request.Request(api_url)
+        token = base64.b64encode(f"{username}:{password}".encode("utf-8")).decode("ascii")
+        req.add_header("Authorization", f"Basic {token}")
+
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.load(resp)
+
+        basic = data.get("basicStats", {}) or {}
+        data_used = int(basic.get("dataUsed", 0) or 0)
+        disk_used = int(basic.get("diskUsed", 0) or 0)
+
+        return {
+            "collectionBytes": data_used,
+            "storageBytes": disk_used,
+            "indexesBytes": max(disk_used - data_used, 0)
+        }
+    except Exception:
+        return None
 
 
 def add_value_labels(ax, values, fmt="{:.1f}"):
@@ -78,17 +119,26 @@ plt.setp(ax.get_xticklabels(), rotation=20, ha="right")
 fig.tight_layout()
 save_fig(fig, "latency")
 
-# 3) Estimativa de armazenamento
-storage_labels = ["Tamanho medio (bytes)", "Total inserido (bytes)"]
+# 3) Armazenamento: estimativas do benchmark + metricas reais do bucket
+storage_live = fetch_couchbase_storage_metrics()
+storage_labels = ["Doc medio", "Total inserido"]
 storage_values = [
     results["storage"]["averageDocumentBytes"],
     results["storage"]["totalInsertedBytes"],
 ]
+if storage_live:
+    storage_labels += ["Collection", "Storage", "Indices"]
+    storage_values += [
+        storage_live["collectionBytes"],
+        storage_live["storageBytes"],
+        storage_live["indexesBytes"],
+    ]
 
-fig, ax = plt.subplots(figsize=(7, 4.5))
+fig, ax = plt.subplots(figsize=(9, 4.5))
 ax.bar(storage_labels, storage_values, color="#3a7d44", alpha=0.85)
 add_value_labels(ax, storage_values, fmt="{:,.0f}")
-ax.set_title("Couchbase - Estimativa de armazenamento")
+ax.set_ylabel("Bytes")
+ax.set_title("Couchbase - Armazenamento (Doc medio, Total inserido, Collection, Storage, Indices)")
 fig.tight_layout()
 save_fig(fig, "storage")
 
