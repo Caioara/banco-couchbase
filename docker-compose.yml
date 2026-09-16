@@ -15,13 +15,18 @@ services:
       COUCHBASE_COLLECTION_ENROLLMENTS: enrollments
       COUCHBASE_COLLECTION_SESSIONS: sessions
       SESSION_SECRET: troque-esta-chave
+      EMBEDDINGS_URL: http://host.docker.internal:11434/v1/embeddings
+      EMBEDDINGS_API_KEY: ollama
+      EMBEDDINGS_MODEL: nomic-embed-text
+      EMBEDDINGS_DIMENSIONS: 768
+      COUCHBASE_VECTOR_INDEX: events-vector-index
     depends_on:
       couchbase:
         condition: service_started
       couchbase-init:
         condition: service_completed_successfully
   couchbase:
-    image: couchbase/server:7.2.4
+    image: couchbase/server:7.6.9
     restart: unless-stopped
     ports:
       - "8091:8091"
@@ -48,6 +53,8 @@ services:
       COUCHBASE_COLLECTION_EVENTS: events
       COUCHBASE_COLLECTION_ENROLLMENTS: enrollments
       COUCHBASE_COLLECTION_SESSIONS: sessions
+      COUCHBASE_VECTOR_INDEX: events-vector-index
+      EMBEDDINGS_DIMENSIONS: 768
     volumes:
       - ./scripts:/scripts:ro
     entrypoint: ["/bin/sh", "/scripts/couchbase-init.sh"]

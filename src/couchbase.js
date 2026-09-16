@@ -28,7 +28,8 @@ function loadConfig() {
       events: process.env.COUCHBASE_COLLECTION_EVENTS || "events",
       enrollments: process.env.COUCHBASE_COLLECTION_ENROLLMENTS || "enrollments",
       sessions: process.env.COUCHBASE_COLLECTION_SESSIONS || "sessions"
-    }
+    },
+    vectorIndex: process.env.COUCHBASE_VECTOR_INDEX || "events-vector-index"
   };
 }
 

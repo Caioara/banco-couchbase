@@ -7,7 +7,11 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "bench": "node scripts/benchmark.js",
-    "cleanup:bench": "node scripts/cleanup-bench.js"
+    "cleanup:bench": "node scripts/cleanup-bench.js",
+    "embeddings:backfill": "node scripts/backfill-embeddings.js",
+    "migration:verify": "node scripts/verify-migration.js",
+    "vector:eval": "node scripts/vector-evaluation.js",
+    "vector:plot": "python scripts/plot-vector-evaluation.py"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

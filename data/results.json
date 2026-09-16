@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-07T20:09:47.862Z",
+  "timestamp": "2026-09-16T20:29:47.596Z",
   "config": {
     "inserts": 1000,
     "reads": 1000,
@@ -21,94 +21,94 @@
       "attempts": 1000,
       "errors": 0,
       "errorRatePercent": 0,
-      "totalMs": 303.5279002189636,
-      "throughputOps": 3294.5900501357687,
-      "avgMs": 13.704678399562836,
-      "p50Ms": 13.465199947357178,
-      "p75Ms": 15.380499839782715,
-      "p90Ms": 16.940900325775146,
-      "p95Ms": 17.73509979248047,
-      "p99Ms": 19.6149001121521
+      "totalMs": 477.26497599994764,
+      "throughputOps": 2095.2721240540177,
+      "avgMs": 22.90925560500054,
+      "p50Ms": 22.26365099987015,
+      "p75Ms": 24.570090000052005,
+      "p90Ms": 28.15126400021836,
+      "p95Ms": 30.309235000051558,
+      "p99Ms": 33.08561599999666
     },
     "readByCode": {
       "count": 1000,
       "attempts": 1000,
       "errors": 0,
       "errorRatePercent": 0,
-      "totalMs": 155.1813998222351,
-      "throughputOps": 6444.071268499509,
-      "avgMs": 7.568234992980957,
-      "p50Ms": 7.181400299072266,
-      "p75Ms": 8.71939992904663,
-      "p90Ms": 9.886499881744385,
-      "p95Ms": 11.198599815368652,
-      "p99Ms": 13.498899936676025
+      "totalMs": 271.82082800008357,
+      "throughputOps": 3678.8939514219,
+      "avgMs": 12.842322729994542,
+      "p50Ms": 11.85641699982807,
+      "p75Ms": 14.922150999773294,
+      "p90Ms": 19.187454000115395,
+      "p95Ms": 20.466918000020087,
+      "p99Ms": 29.108734000008553
     },
     "readPaginated": {
       "count": 200,
       "attempts": 200,
       "errors": 0,
       "errorRatePercent": 0,
-      "totalMs": 3055.9563999176025,
-      "throughputOps": 65.44595989831288,
-      "avgMs": 716.2689914941787,
-      "p50Ms": 729.2800998687744,
-      "p75Ms": 834.5127997398376,
-      "p90Ms": 879.7469997406006,
-      "p95Ms": 926.5774002075195,
-      "p99Ms": 969.7617001533508
+      "totalMs": 2696.095226000063,
+      "throughputOps": 74.18135608537861,
+      "avgMs": 624.6253551599872,
+      "p50Ms": 635.3165739998221,
+      "p75Ms": 693.2381259999238,
+      "p90Ms": 718.3070470001549,
+      "p95Ms": 771.5230660000816,
+      "p99Ms": 861.643667999655
     },
     "update": {
       "count": 500,
       "attempts": 500,
       "errors": 0,
       "errorRatePercent": 0,
-      "totalMs": 250.55940008163452,
-      "throughputOps": 1995.53479070071,
-      "avgMs": 24.746162599563597,
-      "p50Ms": 25.261399745941162,
-      "p75Ms": 26.31190013885498,
-      "p90Ms": 27.672800064086914,
-      "p95Ms": 27.951600074768066,
-      "p99Ms": 28.592400074005127
+      "totalMs": 324.03571899980307,
+      "throughputOps": 1543.0397659348903,
+      "avgMs": 31.995564888000487,
+      "p50Ms": 30.857580000068992,
+      "p75Ms": 40.041983999777585,
+      "p90Ms": 44.64665500028059,
+      "p95Ms": 47.45257299998775,
+      "p99Ms": 49.113504000008106
     },
     "aggregate": {
       "count": 200,
       "attempts": 200,
       "errors": 0,
       "errorRatePercent": 0,
-      "totalMs": 2593.2631998062134,
-      "throughputOps": 77.12290831680541,
-      "avgMs": 600.0841884851455,
-      "p50Ms": 595.1697998046875,
-      "p75Ms": 670.6124000549316,
-      "p90Ms": 789.2934999465942,
-      "p95Ms": 831.349100112915,
-      "p99Ms": 978.3145999908447
+      "totalMs": 2608.549403999932,
+      "throughputOps": 76.67096497897312,
+      "avgMs": 598.7772749449895,
+      "p50Ms": 589.509977999609,
+      "p75Ms": 688.9851689999923,
+      "p90Ms": 763.5727389999665,
+      "p95Ms": 795.4617520002648,
+      "p99Ms": 904.587683999911
     },
     "delete": {
       "count": 500,
       "attempts": 500,
       "errors": 0,
       "errorRatePercent": 0,
-      "totalMs": 99.84569978713989,
-      "throughputOps": 5007.726933317562,
-      "avgMs": 9.645450604438782,
-      "p50Ms": 9.601099967956543,
-      "p75Ms": 10.458399772644043,
-      "p90Ms": 12.68090009689331,
-      "p95Ms": 12.95550012588501,
-      "p99Ms": 13.289499759674072
+      "totalMs": 122.56467700004578,
+      "throughputOps": 4079.478788165152,
+      "avgMs": 11.802280372006818,
+      "p50Ms": 11.96218300005421,
+      "p75Ms": 13.17501899972558,
+      "p90Ms": 14.848738000262529,
+      "p95Ms": 16.22889899974689,
+      "p99Ms": 17.138228999916464
     }
   },
   "efficiency": {
     "bytesPerOperation": 99.41176470588235,
     "opsPerMBInserted": 10059.171597633136,
-    "weightedLatencyMs": 88.74686940894408,
-    "throughputGeralOpsPerSec": 526.4133389308947
+    "weightedLatencyMs": 88.92089028999825,
+    "throughputGeralOpsPerSec": 523.0154751152448
   },
   "cost": {
-    "computeUsd": 0.000012955177975683718,
+    "computeUsd": 0.000025455591065679124,
     "operationsUsd": 0.00068,
     "storageMonthlyUsd": 0.000007773999999999999,
     "pricing": {
@@ -119,199 +119,205 @@
   },
   "resourceTimeline": [
     {
-      "tSec": 0.2,
-      "cpuPercent": 115.59,
-      "rssMB": 67.73,
-      "heapUsedMB": 9.93
+      "tSec": 0.22,
+      "cpuPercent": 180.99,
+      "rssMB": 85.56,
+      "heapUsedMB": 9.38
     },
     {
-      "tSec": 0.41,
-      "cpuPercent": 147.09,
-      "rssMB": 68.61,
-      "heapUsedMB": 13.01
+      "tSec": 0.43,
+      "cpuPercent": 188.33,
+      "rssMB": 87.29,
+      "heapUsedMB": 11.36
     },
     {
-      "tSec": 0.61,
-      "cpuPercent": 91.2,
-      "rssMB": 70.55,
-      "heapUsedMB": 12.84
+      "tSec": 0.64,
+      "cpuPercent": 177.35,
+      "rssMB": 88.5,
+      "heapUsedMB": 10.39
     },
     {
-      "tSec": 0.82,
-      "cpuPercent": 0,
-      "rssMB": 70.59,
-      "heapUsedMB": 13.05
+      "tSec": 0.84,
+      "cpuPercent": 144.67,
+      "rssMB": 92.92,
+      "heapUsedMB": 14.68
     },
     {
-      "tSec": 1.03,
-      "cpuPercent": 7.29,
-      "rssMB": 70.67,
-      "heapUsedMB": 13.32
+      "tSec": 1.04,
+      "cpuPercent": 10.64,
+      "rssMB": 92.92,
+      "heapUsedMB": 14.94
     },
     {
-      "tSec": 1.23,
-      "cpuPercent": 7.38,
-      "rssMB": 71.34,
-      "heapUsedMB": 13.71
+      "tSec": 1.24,
+      "cpuPercent": 1.54,
+      "rssMB": 92.92,
+      "heapUsedMB": 14.96
     },
     {
       "tSec": 1.44,
-      "cpuPercent": 7.52,
-      "rssMB": 71.74,
-      "heapUsedMB": 14.18
+      "cpuPercent": 20.04,
+      "rssMB": 92.92,
+      "heapUsedMB": 8.77
     },
     {
-      "tSec": 1.65,
-      "cpuPercent": 0,
-      "rssMB": 71.91,
-      "heapUsedMB": 14.32
+      "tSec": 1.64,
+      "cpuPercent": 12.72,
+      "rssMB": 92.92,
+      "heapUsedMB": 9.26
     },
     {
-      "tSec": 1.85,
-      "cpuPercent": 15.33,
-      "rssMB": 72.22,
-      "heapUsedMB": 14.65
+      "tSec": 1.84,
+      "cpuPercent": 2.43,
+      "rssMB": 92.92,
+      "heapUsedMB": 9.31
     },
     {
-      "tSec": 2.05,
-      "cpuPercent": 15.96,
-      "rssMB": 72.7,
-      "heapUsedMB": 15.08
+      "tSec": 2.04,
+      "cpuPercent": 14.91,
+      "rssMB": 92.92,
+      "heapUsedMB": 9.92
     },
     {
-      "tSec": 2.26,
-      "cpuPercent": 0,
-      "rssMB": 73.01,
-      "heapUsedMB": 15.43
+      "tSec": 2.24,
+      "cpuPercent": 13.08,
+      "rssMB": 92.92,
+      "heapUsedMB": 10.32
     },
     {
-      "tSec": 2.46,
-      "cpuPercent": 0,
-      "rssMB": 73.54,
-      "heapUsedMB": 15.8
+      "tSec": 2.44,
+      "cpuPercent": 7.78,
+      "rssMB": 93.17,
+      "heapUsedMB": 10.46
     },
     {
-      "tSec": 2.66,
-      "cpuPercent": 7.5,
-      "rssMB": 73.57,
-      "heapUsedMB": 10.29
+      "tSec": 2.64,
+      "cpuPercent": 17.26,
+      "rssMB": 93.27,
+      "heapUsedMB": 11.14
     },
     {
-      "tSec": 2.87,
-      "cpuPercent": 0,
-      "rssMB": 73.84,
-      "heapUsedMB": 10.69
+      "tSec": 2.84,
+      "cpuPercent": 20.02,
+      "rssMB": 93.52,
+      "heapUsedMB": 11.59
     },
     {
-      "tSec": 3.08,
-      "cpuPercent": 7.67,
-      "rssMB": 73.84,
-      "heapUsedMB": 10.97
+      "tSec": 3.04,
+      "cpuPercent": 6.65,
+      "rssMB": 93.65,
+      "heapUsedMB": 11.78
     },
     {
-      "tSec": 3.28,
-      "cpuPercent": 0,
-      "rssMB": 73.84,
-      "heapUsedMB": 11.2
+      "tSec": 3.24,
+      "cpuPercent": 8.37,
+      "rssMB": 93.9,
+      "heapUsedMB": 12.01
     },
     {
-      "tSec": 3.48,
-      "cpuPercent": 0,
-      "rssMB": 73.84,
-      "heapUsedMB": 11.43
+      "tSec": 3.44,
+      "cpuPercent": 14.04,
+      "rssMB": 94.22,
+      "heapUsedMB": 12.28
     },
     {
-      "tSec": 3.68,
-      "cpuPercent": 99.99,
-      "rssMB": 77.91,
-      "heapUsedMB": 15.78
+      "tSec": 3.64,
+      "cpuPercent": 184.12,
+      "rssMB": 98.33,
+      "heapUsedMB": 12.51
     },
     {
-      "tSec": 3.89,
-      "cpuPercent": 44.89,
-      "rssMB": 77.89,
-      "heapUsedMB": 15.03
+      "tSec": 3.84,
+      "cpuPercent": 124.25,
+      "rssMB": 98.47,
+      "heapUsedMB": 14.35
     },
     {
-      "tSec": 4.1,
-      "cpuPercent": 0,
-      "rssMB": 77.93,
-      "heapUsedMB": 15.15
+      "tSec": 4.04,
+      "cpuPercent": 8.53,
+      "rssMB": 98.47,
+      "heapUsedMB": 14.57
     },
     {
-      "tSec": 4.31,
-      "cpuPercent": 7.91,
-      "rssMB": 77.93,
-      "heapUsedMB": 15.42
+      "tSec": 4.24,
+      "cpuPercent": 3.11,
+      "rssMB": 98.47,
+      "heapUsedMB": 14.64
     },
     {
-      "tSec": 4.51,
-      "cpuPercent": 7.47,
-      "rssMB": 77.93,
-      "heapUsedMB": 15.64
+      "tSec": 4.44,
+      "cpuPercent": 8.21,
+      "rssMB": 98.47,
+      "heapUsedMB": 14.83
     },
     {
-      "tSec": 4.72,
-      "cpuPercent": 21.66,
-      "rssMB": 77.93,
-      "heapUsedMB": 15.98
+      "tSec": 4.64,
+      "cpuPercent": 13.33,
+      "rssMB": 98.47,
+      "heapUsedMB": 15.17
     },
     {
-      "tSec": 4.93,
-      "cpuPercent": 0,
-      "rssMB": 77.44,
-      "heapUsedMB": 10.26
+      "tSec": 4.84,
+      "cpuPercent": 13.73,
+      "rssMB": 98.3,
+      "heapUsedMB": 9.95
     },
     {
-      "tSec": 5.14,
-      "cpuPercent": 21.99,
-      "rssMB": 77.63,
-      "heapUsedMB": 10.7
+      "tSec": 5.04,
+      "cpuPercent": 6.73,
+      "rssMB": 98.42,
+      "heapUsedMB": 10.08
     },
     {
-      "tSec": 5.34,
-      "cpuPercent": 15.99,
-      "rssMB": 77.63,
-      "heapUsedMB": 10.94
+      "tSec": 5.24,
+      "cpuPercent": 14.66,
+      "rssMB": 98.42,
+      "heapUsedMB": 10.48
     },
     {
-      "tSec": 5.54,
-      "cpuPercent": 0,
-      "rssMB": 77.63,
-      "heapUsedMB": 11.29
+      "tSec": 5.44,
+      "cpuPercent": 9.8,
+      "rssMB": 98.42,
+      "heapUsedMB": 10.78
     },
     {
-      "tSec": 5.74,
-      "cpuPercent": 7.93,
-      "rssMB": 77.63,
-      "heapUsedMB": 11.67
+      "tSec": 5.64,
+      "cpuPercent": 9.09,
+      "rssMB": 98.42,
+      "heapUsedMB": 10.99
     },
     {
-      "tSec": 5.94,
-      "cpuPercent": 8.02,
-      "rssMB": 77.63,
-      "heapUsedMB": 11.94
+      "tSec": 5.84,
+      "cpuPercent": 13.62,
+      "rssMB": 98.42,
+      "heapUsedMB": 11.41
     },
     {
-      "tSec": 6.14,
-      "cpuPercent": 0,
-      "rssMB": 77.63,
-      "heapUsedMB": 12.18
+      "tSec": 6.04,
+      "cpuPercent": 4.33,
+      "rssMB": 98.42,
+      "heapUsedMB": 11.49
     },
     {
-      "tSec": 6.34,
-      "cpuPercent": 0,
-      "rssMB": 77.63,
-      "heapUsedMB": 12.38
+      "tSec": 6.24,
+      "cpuPercent": 9.08,
+      "rssMB": 98.3,
+      "heapUsedMB": 11.64
+    },
+    {
+      "tSec": 6.45,
+      "cpuPercent": 63.35,
+      "rssMB": 98.43,
+      "heapUsedMB": 15.27
     }
   ],
   "resources": {
-    "eventLoopP95Ms": 20.103167,
-    "heapPeakMB": 15.98,
-    "heapAvgMB": 13.040645161290325,
-    "rssPeakMB": 77.93,
-    "rssAvgMB": 74.57774193548391,
-    "cpuPeakPercent": 147.09,
-    "cpuAvgPercent": 21.23806451612903
+    "eventLoopP95Ms": 19.333119,
+    "heapPeakMB": 15.27,
+    "heapAvgMB": 11.8971875,
+    "rssPeakMB": 98.47,
+    "rssAvgMB": 95.08343750000002,
+    "cpuPeakPercent": 188.33,
+    "cpuAvgPercent": 41.46124999999998
   }
 }

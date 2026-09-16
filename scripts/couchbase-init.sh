@@ -34,6 +34,38 @@ wait_for_query() {
   done
 }
 
+wait_for_fts() {
+  fts_base="${COUCHBASE_URL%:8091}:8094"
+  echo "Aguardando servico FTS em ${fts_base}..."
+  until curl -s -u "${COUCHBASE_USERNAME}:${COUCHBASE_PASSWORD}" "${fts_base}/api/pindex" >/dev/null; do
+    sleep 2
+  done
+}
+
+create_vector_index() {
+  fts_base="${COUCHBASE_URL%:8091}:8094"
+  index_name="${COUCHBASE_VECTOR_INDEX:-events-vector-index}"
+  dims="${EMBEDDINGS_DIMENSIONS:-1536}"
+  collection_type="${COUCHBASE_SCOPE}.${COUCHBASE_COLLECTION_EVENTS}"
+
+  # Couchbase 7.6 requer endpoint escopado e mapping com properties/fields.
+  index_body="{\"name\":\"${index_name}\",\"type\":\"fulltext-index\",\"sourceType\":\"gocbcore\",\"sourceName\":\"${COUCHBASE_BUCKET}\",\"planParams\":{\"maxPartitionsPerPIndex\":32,\"indexPartitions\":1},\"params\":{\"doc_config\":{\"docid_prefix_delim\":\"\",\"docid_regexp\":\"\",\"mode\":\"scope.collection.type_field\",\"type_field\":\"type\"},\"mapping\":{\"default_analyzer\":\"standard\",\"default_mapping\":{\"dynamic\":false,\"enabled\":false},\"default_type\":\"_default\",\"types\":{\"${collection_type}\":{\"dynamic\":false,\"enabled\":true,\"properties\":{\"embedding\":{\"dynamic\":false,\"enabled\":true,\"fields\":[{\"dims\":${dims},\"index\":true,\"name\":\"embedding\",\"similarity\":\"dot_product\",\"type\":\"vector\"}]}}}}},\"store\":{\"indexType\":\"scorch\"}},\"sourceParams\":{}}"
+
+  code="$(curl -s -o /dev/null -w "%{http_code}" -X PUT \
+    -u "${COUCHBASE_USERNAME}:${COUCHBASE_PASSWORD}" \
+    -H "Content-Type: application/json" \
+    -d "${index_body}" \
+    "${fts_base}/api/bucket/${COUCHBASE_BUCKET}/scope/${COUCHBASE_SCOPE}/index/${index_name}")"
+  code="$(printf '%s' "$code" | tr -d '\r')"
+
+  # 200 = criado; 400/409 = ja existe.
+  if [ "$code" != "200" ] && [ "$code" != "400" ] && [ "$code" != "409" ]; then
+    echo "Falha na creacion do indice de vectores '${index_name}'. HTTP ${code}."
+    exit 1
+  fi
+  echo "Indice de vectores '${index_name}' creado (ou xa existia)."
+}
+
 ensure_status() {
   code="$(printf '%s' "$1" | tr -d '\r')"
   description="$2"
@@ -52,7 +84,7 @@ ensure_status() {
 wait_for_couchbase
 
 # Seleciona servicos antes da inicializacao do cluster.
-services_code="$(request_code POST "${COUCHBASE_URL}/node/controller/setupServices" "services=kv,n1ql,index" "")"
+services_code="$(request_code POST "${COUCHBASE_URL}/node/controller/setupServices" "services=kv,n1ql,index,fts" "")"
 ensure_status "$services_code" "configuracao de servicos do cluster" "200" "400" "401"
 if [ "$services_code" = "401" ]; then
   echo "Servicos do cluster ja configurados."
@@ -94,5 +126,8 @@ ensure_status "$enrollments_code" "criacao da collection enrollments" "200" "400
 
 sessions_code="$(request_code POST "${COUCHBASE_URL}/pools/default/buckets/${COUCHBASE_BUCKET}/scopes/${COUCHBASE_SCOPE}/collections" "name=${COUCHBASE_COLLECTION_SESSIONS}" "-u ${COUCHBASE_USERNAME}:${COUCHBASE_PASSWORD}")"
 ensure_status "$sessions_code" "criacao da collection sessions" "200" "400"
+
+wait_for_fts
+create_vector_index
 
 echo "Couchbase inicializado."

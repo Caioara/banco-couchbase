@@ -25,6 +25,7 @@ A aplicacao sobe em http://localhost:3000
 - POST /api/auth/logout
 - GET /api/auth/me
 - GET /api/events?limit=10&offset=0&q=
+- GET /api/events/semantic-search?q=texto-livre
 - GET /api/events/:id
 - GET /api/events/mine
 - POST /api/events
@@ -34,6 +35,91 @@ A aplicacao sobe em http://localhost:3000
 - GET /api/enrollments/me
 - POST /api/enrollments/:id/cancel
 - GET /api/reminders/upcoming?hours=24
+
+## Busca semantica com embeddings
+A busca semantica usa um modelo de embeddings e o Couchbase Vector Search. Ao criar ou atualizar um evento, os campos `title`,
+`description` e `location` sao convertidos em um vetor e salvos no documento como
+`embedding`. Consulte `GET /api/events/semantic-search?q=termo` para buscar por
+significado, e nao apenas por correspondencia literal.
+
+Podes usar um provedor gratuito e local (recomendado para desenvolvimento) ou um
+provedor pago na nube:
+
+### Opcion A (recomendada, gratuita): Ollama local
+Ollama expón um endpoint compatible co protocolo de OpenAI, mais funciona 100% no
+teu PC, sen custo, sen conta e sen enviar datos a ninguén. Para usalo:
+
+```bash
+ollama pull nomic-embed-text
+```
+
+Configura no `.env` (opcion Ollama):
+
+```env
+EMBEDDINGS_URL=http://localhost:11434/v1/embeddings
+EMBEDDINGS_API_KEY=ollama
+EMBEDDINGS_MODEL=nomic-embed-text
+EMBEDDINGS_DIMENSIONS=768
+COUCHBASE_VECTOR_INDEX=events-vector-index
+```
+
+### Opcion B (paga): API de OpenAI
+```env
+EMBEDDINGS_URL=https://api.openai.com/v1/embeddings
+EMBEDDINGS_API_KEY=sua-chave
+EMBEDDINGS_MODEL=text-embedding-3-small
+EMBEDDINGS_DIMENSIONS=1536
+COUCHBASE_VECTOR_INDEX=events-vector-index
+```
+
+No Couchbase 7.6+, o script de inicializacion de Docker Compose crea automaticamente
+um Search index chamado `events-vector-index` para a collection de eventos, co campo
+`embedding` mapeado como:
+
+- tipo `vector`
+- dimension igual a `EMBEDDINGS_DIMENSIONS` (768 con Ollama `nomic-embed-text`, 1536 con OpenAI)
+- similaridade `dot_product`
+
+O servizo `fts` habilítase automaticamente no mesmo script. Se prefires crear o index
+manualmente, faino pola interface (http://localhost:8091), en **Search > Add Index**,
+seleccionando bucket, scope, collection de eventos e mapeando o campo `embedding` cos
+valores indicados arriba. Se a API de embeddings corre en Docker Compose, usa:
+```env
+EMBEDDINGS_URL=http://host.docker.internal:11434/v1/embeddings
+```
+
+Para preencher embeddings de eventos antigos que foram criados antes da vetorizacao:
+
+```bash
+npm run embeddings:backfill
+```
+
+Esse comando exige `EMBEDDINGS_API_KEY` e atualiza somente documentos sem `embedding`.
+Mantenha o mesmo `EMBEDDINGS_MODEL` e `EMBEDDINGS_DIMENSIONS` usados na configuracao
+do Search index. Sem `EMBEDDINGS_API_KEY`, a API continua funcionando com a busca
+textual existente, mas a busca semantica retorna `503` e novos eventos nao recebem
+embedding.
+
+Exemplo de consulta depois de configurar o index:
+
+```bash
+curl "http://localhost:3000/api/events/semantic-search?q=programacao%20web"
+```
+
+### Avaliacao da busca vetorial
+
+Para medir a qualidade da busca aproximada (ANN), execute o avaliador. Ele compara
+os resultados do indice vetorial com o top-K exato calculado contra todos os
+embeddings e gera Recall@K, nDCG@K e QPS para K=1, 5 e 10:
+
+```bash
+docker compose exec api npm run vector:eval
+python scripts/plot-vector-evaluation.py
+```
+
+O relatorio fica em `data/vector-evaluation.json` e o grafico em
+`reports/vector_evaluation.png` e `.svg`. `VECTOR_EVAL_QUERIES` define a quantidade
+de consultas de amostra (padrao: 25).
 
 ## Benchmark e graficos (Couchbase)
 

@@ -7,6 +7,7 @@ const session = require("express-session");
 const couchbase = require("couchbase");
 const { initCouchbase, collectionPath } = require("./couchbase");
 const { CouchbaseSessionStore } = require("./couchbase-session-store");
+const { generateEventEmbedding, generateEmbedding, searchVector } = require("./embeddings");
 const bcrypt = require("bcryptjs");
 
 const app = express();
@@ -103,6 +104,12 @@ function buildEnrollmentKey(eventId, userId) {
 async function getDb() {
   const { cluster, collections, config } = await initCouchbase();
   return { cluster, collections, config };
+}
+
+async function addEventEmbedding(event) {
+  if (!process.env.EMBEDDINGS_API_KEY) return event;
+  const embedding = await generateEventEmbedding(event);
+  return embedding ? { ...event, embedding } : event;
 }
 
 app.post("/api/auth/register", async (req, res) => {
@@ -210,6 +217,33 @@ app.get("/api/auth/me", async (req, res) => {
     if (error instanceof couchbase.DocumentNotFoundError) {
       return res.json({ user: null });
     }
+    return res.status(500).json({ error: error.message });
+  }
+});
+
+app.get("/api/events/semantic-search", async (req, res) => {
+  try {
+    const { collections, config } = await getDb();
+    const query = String(req.query.q || "").trim();
+    if (!query) return res.status(400).json({ error: "Informe q para buscar semanticamente." });
+
+    const vector = await generateEmbedding(query);
+    if (!vector) return res.status(503).json({ error: "Busca semantica nao configurada." });
+
+    const result = await searchVector(config, vector);
+    const hits = result.hits || [];
+    const items = (await Promise.all(hits.map(async (hit) => {
+      try {
+        const event = (await collections.events.get(hit.id)).content;
+        return event.status === "open" ? { ...event, score: hit.score } : null;
+      } catch (error) {
+        if (error instanceof couchbase.DocumentNotFoundError) return null;
+        throw error;
+      }
+    }))).filter(Boolean);
+
+    return res.json({ items, total: items.length, query });
+  } catch (error) {
     return res.status(500).json({ error: error.message });
   }
 });
@@ -374,8 +408,9 @@ app.post("/api/events", requireAuth, requireRole(["admin", "professional"]), asy
       updatedAt: null
     };
 
-    await collections.events.insert(doc.id, doc);
-    return res.status(201).json(doc);
+    const indexedDoc = await addEventEmbedding(doc);
+    await collections.events.insert(indexedDoc.id, indexedDoc);
+    return res.status(201).json(indexedDoc);
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
@@ -439,8 +474,9 @@ app.put("/api/events/:id", requireAuth, requireRole(["admin", "professional"]), 
       updatedAt: new Date().toISOString()
     };
 
-    await collections.events.replace(eventId, update);
-    return res.json(update);
+    const indexedUpdate = await addEventEmbedding(update);
+    await collections.events.replace(eventId, indexedUpdate);
+    return res.json(indexedUpdate);
   } catch (error) {
     if (error instanceof couchbase.DocumentNotFoundError) {
       return res.status(404).json({ error: "Evento nao encontrado." });

@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-09-16T20:44:14.375Z",
+  "methodology": "O ground truth e o top-K exato por dot product contra todos os embeddings. Recall@K compara a intersecao ANN/exato; nDCG@K usa a similaridade exata como relevancia graduada. QPS mede apenas a chamada ao indice vetorial, sem a geracao do embedding da consulta.",
+  "corpusSize": 501,
+  "excludedVectors": 5,
+  "queryCount": 25,
+  "dimensions": 768,
+  "summary": [
+    {
+      "k": 1,
+      "recallAtK": 1,
+      "ndcgAtK": 1,
+      "qps": 274.93108330028025,
+      "avgLatencyMs": 3.6372751599999993
+    },
+    {
+      "k": 5,
+      "recallAtK": 1,
+      "ndcgAtK": 1,
+      "qps": 336.3629861434056,
+      "avgLatencyMs": 2.972978720000001
+    },
+    {
+      "k": 10,
+      "recallAtK": 1,
+      "ndcgAtK": 1,
+      "qps": 318.58761597178597,
+      "avgLatencyMs": 3.1388539600000014
+    }
+  ]
+}
