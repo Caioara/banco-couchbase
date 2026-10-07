@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-09-16T20:44:14.375Z",
-  "methodology": "O ground truth e o top-K exato por dot product contra todos os embeddings. Recall@K compara a intersecao ANN/exato; nDCG@K usa a similaridade exata como relevancia graduada. QPS mede apenas a chamada ao indice vetorial, sem a geracao do embedding da consulta.",
+  "timestamp": "2026-10-07T17:49:52.432Z",
+  "methodology": "Para cada consulta, o ground truth e o top-K exato por dot product contra os demais embeddings, excluindo o proprio documento consultado. A busca vetorial solicita K+1 resultados e remove o documento da consulta antes das metricas. Recall@K compara a intersecao ANN/exato; nDCG@K usa a similaridade exata como relevancia graduada. QPS mede apenas a chamada ao indice vetorial, sem a geracao do embedding da consulta.",
   "corpusSize": 501,
   "excludedVectors": 5,
   "queryCount": 25,
@@ -10,22 +10,22 @@
       "k": 1,
       "recallAtK": 1,
       "ndcgAtK": 1,
-      "qps": 274.93108330028025,
-      "avgLatencyMs": 3.6372751599999993
+      "qps": 234.68571728915606,
+      "avgLatencyMs": 4.261017719999981
     },
     {
       "k": 5,
       "recallAtK": 1,
       "ndcgAtK": 1,
-      "qps": 336.3629861434056,
-      "avgLatencyMs": 2.972978720000001
+      "qps": 283.4728320148041,
+      "avgLatencyMs": 3.5276749200000084
     },
     {
       "k": 10,
-      "recallAtK": 1,
-      "ndcgAtK": 1,
-      "qps": 318.58761597178597,
-      "avgLatencyMs": 3.1388539600000014
+      "recallAtK": 0.8999999999999997,
+      "ndcgAtK": 0.9367242254115473,
+      "qps": 285.1651358793052,
+      "avgLatencyMs": 3.5067400399999995
     }
   ]
 }

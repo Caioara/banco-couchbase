@@ -58,20 +58,25 @@ async function main() {
 
   for (const query of queries) {
     const exact = corpus
+      .filter((candidate) => candidate.id !== query.id)
       .map((candidate) => ({ id: candidate.id, score: dotProduct(query.embedding, candidate.embedding) }))
       .sort((left, right) => right.score - left.score);
     const relevanceById = new Map(exact.map((candidate) => [candidate.id, candidate.score]));
 
     for (const k of KS) {
       const startedAt = performance.now();
-      const result = await searchVector(config, query.embedding, k);
+      // Request one extra hit so the query document can be removed without
+      // changing the production search endpoint or its index configuration.
+      const result = await searchVector(config, query.embedding, k + 1);
       const elapsedMs = performance.now() - startedAt;
       // Um mesmo documento nao pode contribuir mais de uma vez para Recall/nDCG.
       // Isso tambem protege a metrica caso o servico retorne hits duplicados.
-      const actualIds = [...new Set((result.hits || []).map((hit) => hit.id))].slice(0, k);
+      const actualIds = [...new Set((result.hits || []).map((hit) => hit.id))]
+        .filter((id) => id !== query.id)
+        .slice(0, k);
       const expectedIds = exact.slice(0, k).map((candidate) => candidate.id);
       const expectedSet = new Set(expectedIds);
-      const recall = actualIds.filter((id) => expectedSet.has(id)).length / k;
+      const recall = actualIds.filter((id) => expectedSet.has(id)).length / expectedIds.length;
       const idealDcg = dcg(expectedIds, relevanceById);
       const ndcg = idealDcg === 0 ? 0 : dcg(actualIds, relevanceById) / idealDcg;
       if (ndcg > 1.000001) {
@@ -98,7 +103,7 @@ async function main() {
 
   const report = {
     timestamp: new Date().toISOString(),
-    methodology: "O ground truth e o top-K exato por dot product contra todos os embeddings. Recall@K compara a intersecao ANN/exato; nDCG@K usa a similaridade exata como relevancia graduada. QPS mede apenas a chamada ao indice vetorial, sem a geracao do embedding da consulta.",
+    methodology: "Para cada consulta, o ground truth e o top-K exato por dot product contra os demais embeddings, excluindo o proprio documento consultado. A busca vetorial solicita K+1 resultados e remove o documento da consulta antes das metricas. Recall@K compara a intersecao ANN/exato; nDCG@K usa a similaridade exata como relevancia graduada. QPS mede apenas a chamada ao indice vetorial, sem a geracao do embedding da consulta.",
     corpusSize: corpus.length,
     excludedVectors: rows.length - corpus.length,
     queryCount: queries.length,
